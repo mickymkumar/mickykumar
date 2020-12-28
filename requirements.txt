@@ -1,2 +1,4 @@
 #requirements
 gunicorn
+django
+django-heroku
