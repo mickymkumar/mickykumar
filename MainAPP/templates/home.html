@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load static %}
 <html>
 <head><title>Micky Kumar</title>
 <meta charset="UTF-8">
@@ -23,7 +24,7 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
 
       <div class="w3-white w3-text-grey w3-card-4">
         <div class="w3-display-container">
-          <img src="images/me.jpeg" style="width:100%" alt="Avatar">
+          <img src="{% static 'images/me.jpeg '%}" style="width:100%" alt="Avatar">
           <div class="w3-display-bottomleft w3-container w3-text-black">
             <h2>Micky Kumar</h2>
           </div>
@@ -54,7 +55,7 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
           </div>
 
           <p class="w3-large"><b><i class="fa fa-asterisk fa-fw w3-margin-right w3-text-teal"></i>Techincal Skills</b></p>
-          <p>Accountinng</p>
+          <p>Accounting</p>
           <div class="w3-light-grey w3-round-xlarge w3-small">
             <div class="w3-container w3-center w3-round-xlarge w3-blue" style="width:80%">
               <div class="w3-center w3-text-white">80%</div>
@@ -86,7 +87,7 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
       <div class="w3-container w3-card w3-white w3-margin-bottom">
         <h2 class="w3-text-black w3-padding-16"><i class="fa fa-suitcase fa-fw w3-margin-right w3-xxlarge w3-text-black"></i>Work Experience</h2>
         <div class="w3-container">
-          <h5><img src="images\ingenutic.png" style="width:10%" alt="Avatar" class="w3-text-black"><b>Co-founder | Ingenuitic </b></h5>
+          <h5><img src="{% static 'images\ingenutic.png' %}" style="width:10%" alt="Avatar" class="w3-text-black"><b>Co-founder | Ingenuitic </b></h5>
           <h6 class="w3-text-black"><i class="fa fa-calendar fa-fw w3-margin-right"></i>Jan 2015 - <span class="w3-tag w3-black w3-round">Current</span></h6>
           <p> <ul>
                 <li>Identify and gather the requirements and convert the technical specs.</li>
@@ -102,8 +103,8 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
 
         <div class="w3-container">
           <h5>
-            <img src="images\company_logo\tim_hortons.png" src="images\company_logo\campass_group.jpg" style="width:10%" alt="Avatar" class="w3-text-black">
-            <img  src="images\company_logo\campass_group.jpg" style="width:10%" alt="Avatar" class="w3-text-black">
+            <img src="{% static 'images\campass_group.jpg' %}" style="width:10%" alt="Avatar" class="w3-text-black">
+            <img  src="{% static 'images\tim_hortons.png' %}" style="width:10%" alt="Avatar" class="w3-text-black">
             <b>Baker | Campass Group (Tim Hortons)</b></h5>
           <h6 class="w3-text-black"><i class="fa fa-calendar fa-fw w3-margin-right"></i>Jan 2018 - <span class="w3-tag w3-black w3-round">Current</span></h6>
           <p></p>
@@ -115,30 +116,54 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
       <div class="w3-container w3-card w3-white w3-margin-bottom">
         <h2 class="w3-text-black w3-padding-16"><i class="fa fa-suitcase fa-fw w3-margin-right w3-xxlarge w3-text-black"></i>Volunteer Experience</h2>
         <div class="w3-container">
+          <img  src="{% static '' %}" style="width:10%" alt="Avatar" class="w3-text-black">
           <h5 class="w3-text-black"><b>Manager of Operation | Testoper </b></h5>
           <h6 class="w3-text-black"><i class="fa fa-calendar fa-fw w3-margin-right"></i>March 2020 - <span class="w3-tag w3-black w3-round">Current</span></h6>
-          <p></p>
+          <p>
+            <ul>
+              <li>Identify and implement IT tools required for scalable operations while currently manage and administer all tools used in Testopers (Jira, Confluence, Github)</li>
+              <li>Record and maintain YouTube channel for Codeathon as well as MS teams files and channels</li>
+              <li>Report on day-to-day activities to the Director of Operation</li>
+        </ul>
+          </p>
           <hr>
         </div>
 
-        <div class="w3-container">
-          <h5> <img src="images\company_logo\stadium_comics.jpg" style="width:10%" alt="Avatar" class="w3-text-black"><b>Helper | Stadium Comics</b></h5>
-          <h6 class="w3-text-black"><i class="fa fa-calendar fa-fw w3-margin-right"></i>May 2016 -  May 2019 </h6>
-          <p></p>
-          <hr>
-        </div>
+
       </div>
 
       <div class="w3-container w3-card w3-white">
         <h2 class="w3-text-black w3-padding-16"><i class="fa fa-certificate fa-fw w3-margin-right w3-xxlarge w3-text-black"></i>Education</h2>
         <div class="w3-container">
-          <h5><img src="images\company_logo\sheridan_college.png" style="width:10%" alt="Avatar" class="w3-text-black"><b>Sheridan College</b></h5>
+          <h5><img src="{% static '' %}" style="width:10%" alt="Avatar" class="w3-text-black"><b>University of Toronto</b></h5>
+          <h6 class="w3-text-black"><i class="fa fa-calendar fa-fw w3-margin-right"></i>2020 - 2020</h6>
+          <p>Artificial Intelligence (AI) </p>
+          <p>
+            <ul>
+              <li>Professional development completed in Machine Learning, Deep Learning, Intelligent Agent & Reinforcement Agent.</li>
+        </ul>
+          </p>
+          <hr>
+        </div>
+        <div class="w3-container">
+          <h5><img src="{% static 'images\sheridan_college.png' %}" style="width:10%" alt="Avatar" class="w3-text-black"><b>Sheridan College</b></h5>
+          <h6 class="w3-text-black"><i class="fa fa-calendar fa-fw w3-margin-right"></i>2019 - 2020</h6>
+          <p>Python Foundations Certificate </p>
+          <p>
+            <ul>
+              <li>Continuing education in Advance python - Django, Framework and Python programming - building & packaging application.</li>
+        </ul>
+          </p>
+          <hr>
+        </div>
+        <div class="w3-container">
+          <h5><img src="{% static 'images\sheridan_college.png' %}" style="width:10%" alt="Avatar" class="w3-text-black"><b>Sheridan College</b></h5>
           <h6 class="w3-text-black"><i class="fa fa-calendar fa-fw w3-margin-right"></i>2018 - 2019</h6>
           <p>Data Scientist |Honours certificate </p>
           <hr>
         </div>
         <div class="w3-container">
-          <h5><img src="images\company_logo\sheridan_college.png" style="width:10%" alt="Avatar" class="w3-text-black"><b>Sheridan College</b></h5>
+          <h5><img src="{% static 'images\sheridan_college.png' %}"  style="width:10%" alt="Avatar" class="w3-text-black"><b>Sheridan College</b></h5>
           <h6 class="w3-text-black"><i class="fa fa-calendar fa-fw w3-margin-right"></i>2015 - 2018</h6>
           <p>Business Adminstration - Accountinng |Advanced diploma</p><br>
           <p>
@@ -152,18 +177,20 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif}
                 <ul>
                   <li>Maintaining the club books and reporting Financial statements in club meetings</li>
                 </ul>
+              <li>Member of Sheridan Comic Con in 2015 to 2016</li>
+                <ul>
+                  <li>Host and maintain Sheridan Comic Con events at Sheridan College.</li>
+                </ul>
+              <li>Member of Sheridan Business Council in 2015</li>
+              <ul>
+                <li>Support events hosted by Sheridan Business Council which include garden, and Dragons Den events.</li>
+              </ul>
 
         </ul>
-            •
-
-•	Member of Sheridan Comic Con in 2015 to 2016
-o	Host and maintain Sheridan Comic Con events at Sheridan College.
-•	Member of Sheridan Business Council in 2015
-o	Support events hosted by Sheridan Business Council which include garden, and Dragons Den events.
-
-          </p>
+        </p>
         </div>
-      </div></div>
+      </div>
+    </div>
 
     <!-- End Right Column -->
     </div>
@@ -176,8 +203,8 @@ o	Support events hosted by Sheridan Business Council which include garden, and D
 <body class="w3-container w3-white w3-center w3-margin-top">
   <h3>BADGES</h3>
   <h4>Hackerank</h4>
-  <img src="images\python.png" style="width:50" alt="Avatar">
-  <img src="images\sql.png" style="width:50" alt="Avatar">
+  <img src="{% static 'images\python.png' %}"  style="width:50" alt="Avatar">
+  <img src="{% static 'images\sql.png' %}"   style="width:50" alt="Avatar">
 
 
 </body>
