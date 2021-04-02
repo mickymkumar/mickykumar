@@ -16,6 +16,7 @@ import MainAPP.views
 
 urlpatterns = [
     path("", MainAPP.views.index, name="index"),
+    path("portfolio/", MainAPP.views.portfolio, name="portfolio"),
     path("db/", MainAPP.views.db, name="db"),
     path("admin/", admin.site.urls),
 ]
