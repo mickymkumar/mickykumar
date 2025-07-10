@@ -1,0 +1,194 @@
+<!-- Sticky Navbar -->
+<header class="sticky top-0 z-50 bg-white/90 backdrop-blur-lg border-b border-gray-200 shadow-sm transition-all duration-300">
+  <div class="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
+    <!-- Left: Avatar + Name -->
+    <div id="navbar-avatar" class="flex items-center space-x-4 transition-all duration-300">
+      <div class="w-14 h-14 rounded-full overflow-hidden shadow-neon-glow shrink-0">
+        <img src="/assets/me.jpeg" alt="Micky Kumar" class="w-full h-full object-cover rounded-full" />
+      </div>
+      <span class="text-xl font-bold text-gray-800 hidden sm:inline">Micky Kumar</span>
+    </div>
+
+    <!-- Right: Nav Links -->
+    <nav class="hidden md:flex items-center space-x-6 font-semibold text-gray-700">
+      <a href="#about" class="hover:text-cyan-600 transition">About</a>
+      <a href="#services" class="hover:text-cyan-600 transition">Services</a>
+      <a href="#projects" class="hover:text-cyan-600 transition">Projects</a>
+      <a href="#contact" class="hover:text-cyan-600 transition">Contact</a>
+    </nav>
+
+    <!-- Mobile Hamburger -->
+    <button id="menu-toggle" class="md:hidden focus:outline-none">
+      <svg class="w-7 h-7 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="md:hidden max-h-0 overflow-hidden transition-all duration-500 ease-in-out bg-white px-6">
+    <nav class="flex flex-col py-4 space-y-3 font-medium text-gray-700">
+      <a href="#about" class="hover:text-cyan-600">About</a>
+      <a href="#services" class="hover:text-cyan-600">Services</a>
+      <a href="#projects" class="hover:text-cyan-600">Projects</a>
+      <a href="#contact" class="hover:text-cyan-600">Contact</a>
+    </nav>
+  </div>
+</header>
+
+
+<!-- Hero Section -->
+<section class="relative bg-white text-gray-900 font-sfpro rounded-b-3xl overflow-hidden select-none">
+  <div class="relative z-20 flex flex-col md:flex-row justify-center items-center max-w-7xl mx-auto px-6 md:px-24 py-24 gap-24">
+
+    <!-- Left Column -->
+    <div class="flex flex-col items-center md:items-start md:w-1/2 space-y-10">
+      <h1 class="text-6xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-700 drop-shadow-xl">
+        Micky Kumar
+      </h1>
+      <h2 class="uppercase tracking-widest text-lg font-semibold text-cyan-700 drop-shadow-md">
+        Full Stack Network Engineer
+      </h2>
+
+      <!-- CTA Buttons -->
+      <div class="flex flex-wrap gap-4 pt-6">
+        <a href="https://calendly.com/mickykumar" class="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 text-white rounded-full font-semibold shadow-lg transition-all duration-300">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16h6m2 4H7a2 2 0 01-2-2V6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v10a2 2 0 01-2 2z" />
+          </svg>
+          Work With Me
+        </a>
+        <a href="https://calendly.com/mickykumar" class="inline-flex items-center gap-3 px-6 py-3 bg-gray-900 hover:bg-gray-800 text-white rounded-full font-semibold shadow-lg transition-all duration-300">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A8 8 0 1118.9 6.121a8 8 0 01-13.779 11.683zM12 12l-1 2-2 1 1-2 2-1z" />
+          </svg>
+          Hire Me
+        </a>
+      </div>
+
+
+      <!-- Currently Working At Section -->
+      <div class="pt-10 w-full">
+        <h3 class="text-sm uppercase tracking-wider text-gray-500 font-semibold mb-4">Currently Supporting At</h3>
+        <div class="flex flex-wrap items-center gap-3">
+          <span class="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-full text-sm font-medium shadow-sm transition">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h4v11H3zM17 10h4v11h-4zM10 3h4v18h-4z" />
+            </svg>
+            Magma
+          </span>
+
+          <!-- KSpace -->
+          <span class="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-full text-sm font-medium shadow-sm transition">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h4v11H3zM17 10h4v11h-4zM10 3h4v18h-4z" />
+            </svg>
+            KSpace
+          </span>
+
+          <!-- TechNorth Community 
+          <span class="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-full text-sm font-medium shadow-sm transition">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h4v11H3zM17 10h4v11h-4zM10 3h4v18h-4z" />
+            </svg>
+            TechNorth Community
+          </span>-->
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column -->
+    <div class="md:w-1/2 w-full max-w-3xl bg-gray-50/90 backdrop-blur-md rounded-3xl shadow-lg p-12 font-mono text-base md:text-lg text-cyan-900 leading-relaxed relative overflow-hidden">
+      <div class="terminal-log space-y-3 animate-terminalScroll">
+        <p>$ <span class="text-purple-700 font-bold">Rebooting</span> Micky Kumar...</p>
+        <p>&gt; Initializing <span class="text-cyan-800 font-semibold">global support</span> <span class="text-pink-600 font-extrabold">∞</span></p>
+        <p>&gt; Syncing <span class="text-yellow-700 font-semibold">Availability.Hours</span> <span class="text-pink-600 font-extrabold">24/7</span></p>
+        <p>&gt; Establishing <span class="text-cyan-800 font-semibold">engineer uplink interface</span>...</p>
+        <p class="text-green-700 font-bold mt-8">✅ System online — Micky is Available</p>
+      </div>
+      <div class="absolute top-0 left-0 w-full h-full pointer-events-none scan-overlay"></div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- Styles -->
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;600;800&display=swap');
+
+  .font-sfpro {
+    font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+      Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  }
+
+  .shadow-neon-glow {
+    box-shadow:
+      0 0 10px #00fff7,
+      0 0 20px #00fff7,
+      0 0 30px #0ff,
+      0 0 50px #0ff,
+      0 0 70px #7fffd4;
+  }
+
+  @keyframes terminalScroll {
+    0% { opacity: 0; transform: translateY(25px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  .animate-terminalScroll {
+    animation: terminalScroll 1.8s ease forwards;
+  }
+
+  .terminal-log p::after {
+    content: "_";
+    margin-left: 5px;
+    animation: blink 1.2s steps(2, start) infinite;
+    color: #00bcd4;
+  }
+
+  @keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+  }
+
+  .scan-overlay {
+    background: linear-gradient(
+      90deg,
+      rgba(0, 255, 255, 0.07) 0%,
+      rgba(255, 255, 255, 0.11) 50%,
+      rgba(0, 255, 255, 0.07) 100%
+    );
+    mix-blend-mode: screen;
+    animation: scanMove 6s linear infinite;
+  }
+
+  @keyframes scanMove {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
+</style>
+
+<!-- JavaScript: Shrink Avatar on Scroll + Toggle Mobile Menu -->
+<script>
+  // Shrink avatar on scroll
+  window.addEventListener('scroll', () => {
+    const avatar = document.getElementById('navbar-avatar');
+    if (window.scrollY > 30) {
+      avatar.classList.add('scale-75');
+    } else {
+      avatar.classList.remove('scale-75');
+    }
+  });
+
+  // Mobile menu toggle
+  const toggleBtn = document.getElementById('menu-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  toggleBtn.addEventListener('click', () => {
+    const isOpen = mobileMenu.classList.contains('max-h-60');
+    mobileMenu.classList.toggle('max-h-0', isOpen);
+    mobileMenu.classList.toggle('max-h-60', !isOpen); // Adjust max height based on content
+  });
+</script>

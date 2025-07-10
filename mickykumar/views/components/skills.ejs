@@ -1,0 +1,91 @@
+<section id="skills" class="relative py-20 bg-gradient-to-b from-[#0a0f1a] to-[#121927] text-cyan-300 font-sfpro overflow-hidden border-t border-b border-cyan-700">
+
+  <!-- 🌌 Starfield Background -->
+  <div class="starfield absolute inset-0 z-0"></div>
+
+  <!-- ⚙️ Skills Terminal Content -->
+  <div class="relative z-10 max-w-5xl mx-auto px-6 w-full">
+    
+    <h3 class="text-3xl md:text-4xl font-extrabold text-cyan-400 mb-10 tracking-wide drop-shadow">
+      <span class="text-cyan-300 font-mono">&gt;</span> Skills Terminal
+    </h3>
+
+    <ul class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
+      <% portfolioData.skills.forEach(skill => { %>
+        <li class="flex items-center gap-3 px-5 py-3 rounded-xl border border-cyan-700 bg-[#0a1625]/60 shadow-glow hover:shadow-glow-lg hover:scale-[1.03] transition-all duration-300 ease-in-out">
+          <i class="<%= skill.icon %> text-cyan-300 text-xl"></i>
+          <span class="text-white font-medium tracking-wide"><%= skill.name %></span>
+        </li>
+      <% }) %>
+    </ul>
+
+    <p class="mt-8 text-cyan-400 text-sm font-mono blinking-cursor">> All systems operational</p>
+  </div>
+<!-- 🛰️ Open Source Telco Projects -->
+    <h4 class="text-xl font-semibold text-cyan-200 mb-6 mt-4 tracking-wide">📡 Open Source Telco Projects</h4>
+    <ul class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
+      <li class="flex items-center gap-3 px-5 py-3 rounded-xl border border-cyan-700 bg-[#0a1625]/60 shadow-glow transition-all duration-300 hover:shadow-glow-lg hover:scale-[1.03]">
+        <i class="lucide lucide-globe text-cyan-300 text-xl"></i>
+        <span class="text-white font-medium tracking-wide">Anuket</span>
+      </li>
+      <li class="flex items-center gap-3 px-5 py-3 rounded-xl border border-cyan-700 bg-[#0a1625]/60 shadow-glow transition-all duration-300 hover:shadow-glow-lg hover:scale-[1.03]">
+        <i class="lucide lucide-globe text-cyan-300 text-xl"></i>
+        <span class="text-white font-medium tracking-wide">CNTI</span>
+      </li>
+      <li class="flex items-center gap-3 px-5 py-3 rounded-xl border border-cyan-700 bg-[#0a1625]/60 shadow-glow transition-all duration-300 hover:shadow-glow-lg hover:scale-[1.03]">
+        <i class="lucide lucide-globe text-cyan-300 text-xl"></i>
+        <span class="text-white font-medium tracking-wide">FD.io</span>
+      </li>
+      <li class="flex items-center gap-3 px-5 py-3 rounded-xl border border-cyan-700 bg-[#0a1625]/60 shadow-glow transition-all duration-300 hover:shadow-glow-lg hover:scale-[1.03]">
+        <i class="lucide lucide-globe text-cyan-300 text-xl"></i>
+        <span class="text-white font-medium tracking-wide">L3AF</span>
+      </li>
+      <li class="flex items-center gap-3 px-5 py-3 rounded-xl border border-cyan-700 bg-[#0a1625]/60 shadow-glow transition-all duration-300 hover:shadow-glow-lg hover:scale-[1.03]">
+        <i class="lucide lucide-globe text-cyan-300 text-xl"></i>
+        <span class="text-white font-medium tracking-wide">Nephio</span>
+      </li>
+      <li class="flex items-center gap-3 px-5 py-3 rounded-xl border border-cyan-700 bg-[#0a1625]/60 shadow-glow transition-all duration-300 hover:shadow-glow-lg hover:scale-[1.03]">
+        <i class="lucide lucide-globe text-cyan-300 text-xl"></i>
+        <span class="text-white font-medium tracking-wide">ONAP</span>
+      </li>
+      <li class="flex items-center gap-3 px-5 py-3 rounded-xl border border-cyan-700 bg-[#0a1625]/60 shadow-glow transition-all duration-300 hover:shadow-glow-lg hover:scale-[1.03]">
+        <i class="lucide lucide-globe text-cyan-300 text-xl"></i>
+        <span class="text-white font-medium tracking-wide">OpenDaylight</span>
+      </li>
+      <li class="flex items-center gap-3 px-5 py-3 rounded-xl border border-cyan-700 bg-[#0a1625]/60 shadow-glow transition-all duration-300 hover:shadow-glow-lg hover:scale-[1.03]">
+        <i class="lucide lucide-globe text-cyan-300 text-xl"></i>
+        <span class="text-white font-medium tracking-wide">Paraglider</span>
+      </li>
+      <li class="flex items-center gap-3 px-5 py-3 rounded-xl border border-cyan-700 bg-[#0a1625]/60 shadow-glow transition-all duration-300 hover:shadow-glow-lg hover:scale-[1.03]">
+        <i class="lucide lucide-globe text-cyan-300 text-xl"></i>
+        <span class="text-white font-medium tracking-wide">XGVela</span>
+      </li>
+      <li class="flex items-center gap-3 px-5 py-3 rounded-xl border border-cyan-700 bg-[#0a1625]/60 shadow-glow transition-all duration-300 hover:shadow-glow-lg hover:scale-[1.03]">
+        <i class="lucide lucide-globe text-cyan-300 text-xl"></i>
+        <span class="text-white font-medium tracking-wide">ISP Toolbox</span>
+      </li>
+      <li class="flex items-center gap-3 px-5 py-3 rounded-xl border border-cyan-700 bg-[#0a1625]/60 shadow-glow transition-all duration-300 hover:shadow-glow-lg hover:scale-[1.03]">
+        <i class="lucide lucide-globe text-cyan-300 text-xl"></i>
+        <span class="text-white font-medium tracking-wide">Magma</span>
+      </li>
+      <li class="flex items-center gap-3 px-5 py-3 rounded-xl border border-cyan-700 bg-[#0a1625]/60 shadow-glow transition-all duration-300 hover:shadow-glow-lg hover:scale-[1.03]">
+        <i class="lucide lucide-globe text-cyan-300 text-xl"></i>
+        <span class="text-white font-medium tracking-wide">Maveric</span>
+      </li>
+      <li class="flex items-center gap-3 px-5 py-3 rounded-xl border border-cyan-700 bg-[#0a1625]/60 shadow-glow transition-all duration-300 hover:shadow-glow-lg hover:scale-[1.03]">
+        <i class="lucide lucide-globe text-cyan-300 text-xl"></i>
+        <span class="text-white font-medium tracking-wide">Open M-Plane</span>
+      </li>
+      <li class="flex items-center gap-3 px-5 py-3 rounded-xl border border-cyan-700 bg-[#0a1625]/60 shadow-glow transition-all duration-300 hover:shadow-glow-lg hover:scale-[1.03]">
+        <i class="lucide lucide-globe text-cyan-300 text-xl"></i>
+        <span class="text-white font-medium tracking-wide">Terragraph</span>
+      </li>
+      <li class="flex items-center gap-3 px-5 py-3 rounded-xl border border-cyan-700 bg-[#0a1625]/60 shadow-glow transition-all duration-300 hover:shadow-glow-lg hover:scale-[1.03]">
+        <i class="lucide lucide-globe text-cyan-300 text-xl"></i>
+        <span class="text-white font-medium tracking-wide">open5gs</span>
+      </li>
+    </ul>
+
+    <p class="mt-8 text-cyan-400 text-sm font-mono blinking-cursor">&gt; All systems operational</p>
+  </div>  
+</section>

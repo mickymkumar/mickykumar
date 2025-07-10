@@ -1,0 +1,152 @@
+body {
+  background-color: #ffffff; /* terminal black */
+  color: #000000; /* all text white */
+  font-family: 'Courier New', Courier, monospace;
+  margin: 0;
+}
+
+#projects {
+  background-color: #000000;
+  color: #ffffff;
+  min-height: 100vh;
+  padding-bottom: 3rem;
+}
+
+input, select, button {
+  background-color: #c35959;
+  border: 1px solid #33ff33; /* neon green borders */
+  color: #ffffff; /* white text */
+  font-family: 'Courier New', Courier, monospace;
+  transition: all 0.3s ease;
+}
+
+input::placeholder, select::placeholder {
+  color: #ffffffaa; /* white with some transparency */
+}
+
+input:focus, select:focus {
+  outline: none;
+  box-shadow: 0 0 5px #33ff33; /* neon green glow */
+}
+
+button:hover {
+  background-color: #33ff33; /* neon green background */
+  color: #000000; /* black text on hover */
+}
+
+.bg-white, .bg-gray-50, .shadow-md, .shadow, .rounded-xl {
+  background-color: #ffffff !important;
+  border: 1px solid #33ff33 !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  color: #ffffff !important;
+}
+
+h3, h4 {
+  color: #ffffff; /* white headings */
+  text-transform: uppercase;
+  border-bottom: 1px solid #33ff33;
+  padding-bottom: 4px;
+  margin-bottom: 12px;
+}
+
+.tag-btn, .assoc-btn {
+  border: 1px solid #33ff33;
+  background: transparent;
+  color: #ffffff; /* white text */
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  cursor: pointer;
+  user-select: none;
+}
+
+.tag-btn:hover, .assoc-btn:hover {
+  background-color: #33ff33;
+  color: #000000;
+}
+
+.tag-btn.active, .assoc-btn.active {
+  background-color: #33ff33;
+  color: #000000;
+}
+
+#pagination button {
+  border: 1px solid #33ff33;
+  background: transparent;
+  color: #ffffff; /* white text */
+  padding: 0.25rem 0.75rem;
+  margin: 0 2px;
+  cursor: pointer;
+  user-select: none;
+  font-family: 'Courier New', Courier, monospace;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+#pagination button:hover {
+  background-color: #33ff33;
+  color: #000000;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.cursor-blink::after {
+  content: '_';
+  animation: blink 1s infinite;
+  color: #33ff33; /* neon green blinking cursor */
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+.starfield {
+  background: radial-gradient(ellipse at bottom, #000000 0%, #0d0d25 100%);
+  overflow: hidden;
+}
+
+.starfield::before,
+.starfield::after {
+  content: "";
+  position: absolute;
+  top: -100%;
+  left: 0;
+  width: 200%;
+  height: 300%;
+  background-image: 
+    radial-gradient(1px 1px at 20% 30%, #ffffff 50%, transparent 51%),
+    radial-gradient(1px 1px at 70% 80%, #44ffee 50%, transparent 51%),
+    radial-gradient(1px 1px at 40% 60%, #22d3ee 50%, transparent 51%),
+    radial-gradient(1px 1px at 90% 20%, #ffffff 50%, transparent 51%);
+  background-repeat: repeat;
+  background-size: 300px 300px;
+  animation: moveStars 120s linear infinite;
+  opacity: 0.6;
+  z-index: 0;
+}
+
+.starfield::after {
+  animation-duration: 200s;
+  background-size: 600px 600px;
+  opacity: 0.4;
+}
+
+@keyframes moveStars {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(100vh); }
+}
+
+.blinking-cursor::after {
+  content: "_";
+  animation: blink 1s steps(2, start) infinite;
+}
+
+@keyframes blink {
+  to { visibility: hidden; }
+}

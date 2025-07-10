@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title class="color: text-white">Project Library</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    /* Flip card 3D styles */
+    .perspective {
+      perspective: 1000px;
+    }
+    .preserve-3d {
+      transform-style: preserve-3d;
+    }
+    .backface-hidden {
+      backface-visibility: hidden;
+    }
+    .rotate-y-180 {
+      transform: rotateY(180deg);
+    }
+
+    /* Vintage style checkboxes */
+    input[type="checkbox"] {
+      accent-color: #c8bb9f;
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+    }
+
+    label {
+      cursor: pointer;
+      color: #c8bb9f;
+      font-size: 0.95rem;
+      user-select: none;
+    }
+
+    #tagFilters label:hover,
+    #associatedFilters label:hover {
+      background-color: #3b3429;
+      border-radius: 3px;
+      padding-left: 4px;
+    }
+
+    /* Pagination buttons */
+    #pagination button {
+      border: 1px solid #c8bb9f;
+      background-color: #211a11;
+      color: #c8bb9f;
+      cursor: pointer;
+      padding: 0.25rem 0.75rem;
+      border-radius: 4px;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    #pagination button:hover {
+      background-color: #661d16;
+      border-color: #661d16;
+      color: #c8bb9f;
+    }
+    #pagination button.bg-active,
+    #pagination button:focus {
+      background-color: #661d16;
+      border-color: #661d16;
+      color: #c8bb9f;
+    }
+
+    /* 📚 Bookshelf styling */
+    .bg-bookshelf {
+      background-image: url('/assets/bookshelf-texture.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
+    .bookshelf-shelf {
+  background-color: rgba(33, 26, 17, 0.92);
+  border-radius: 6px;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border: 1px solid #3b3429;
+  box-shadow: inset 0 -4px 6px rgba(0, 0, 0, 0.4);
+}
+
+  </style>
+</head>
+<body class="bg-gray-100 text-gray-900">
+
+  <section id="projects" class="py-16 bg-[url('/assets/library-bg.png')] bg-cover bg-center">
+    <div class="max-w-7xl mx-auto px-6">
+      <h3 class="text-4xl font-bold text-center mb-12 text-gray-900 font-sfpro">Project Library</h3>
+
+      <div class="flex flex-col lg:flex-row gap-8">
+        <!-- Sidebar Filters -->
+        <aside
+  class="w-full lg:w-1/4 font-serif p-6 rounded-lg shadow-md sticky top-20 max-h-[80vh] overflow-y-auto select-none border border-[#c8bb9f]"
+  style="background-color: transparent;"
+>
+  <div class="bookshelf-shelf">
+    <label for="searchInput" class="block text-lg font-semibold mb-3 pb-1 border-b border-[#c8bb9f]" style="color: #c8bb9f;">
+      Search Titles
+    </label>
+    <input type="text" id="searchInput" placeholder="Search books..." class="w-full mb-6 px-3 py-2 rounded-sm focus:outline-none"
+      style="background-color: #211a11; color: #c8bb9f; border: 1px solid #c8bb9f; caret-color: #c8bb9f;" oninput="applyFilters()" />
+  </div>
+
+  <div class="bookshelf-shelf">
+    <label for="sortSelect" class="block text-lg font-semibold mb-3 pb-1 border-b border-[#c8bb9f]" style="color: #c8bb9f;">
+      Sort By
+    </label>
+    <select id="sortSelect" class="w-full mb-6 px-3 py-2 rounded-sm focus:outline-none"
+      style="background-color: #211a11; color: #c8bb9f; border: 1px solid #c8bb9f;" onchange="applyFilters()">
+      <option value="newest">Newest</option>
+      <option value="oldest">Oldest</option>
+    </select>
+  </div>
+
+  <div class="bookshelf-shelf">
+    <h4 class="text-lg font-semibold mb-3 pb-1 border-b border-[#c8bb9f]" style="color: #c8bb9f;">Tags</h4>
+    <div id="tagFilters" class="flex flex-col gap-2 max-h-48 overflow-y-auto pr-1 scroll-smooth"></div>
+  </div>
+
+  <div class="bookshelf-shelf">
+    <h4 class="text-lg font-semibold mb-3 pb-1 border-b border-[#c8bb9f]" style="color: #c8bb9f;">Associated</h4>
+    <div id="associatedFilters" class="flex flex-col gap-2 max-h-48 overflow-y-auto pr-1 scroll-smooth"></div>
+  </div>
+
+  <div class="bookshelf-shelf">
+    <button onclick="resetFilters()" class="w-full py-2 rounded-sm transition-colors"
+      style="background-color: #661d16; color: #c8bb9f; border: 1px solid #661d16;"
+      onmouseover="this.style.backgroundColor='#4a150f'; this.style.borderColor='#4a150f'"
+      onmouseout="this.style.backgroundColor='#661d16'; this.style.borderColor='#661d16'">
+      Reset Filters
+    </button>
+  </div>
+</aside>
+
+
+        <!-- Projects Bookshelf -->
+        <div class="w-full lg:w-3/4">
+          <div id="projectGrid" class="grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            <!-- Books will be inserted here -->
+          </div>
+          <div class="mt-10 flex justify-center gap-2" id="pagination"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const projects = [
+      {
+        id: 1,
+        name: "Project Alpha",
+        description: "A detailed overview of Project Alpha.",
+        tags: ["AI", "ML"],
+        Associated: [{ name: "Team A" }],
+        image: "/assets/book-cover.jpg",
+        locked: false,
+        eta: null,
+        date: "2025-06-01",
+      },
+      {
+        id: 2,
+        name: "Project Beta",
+        description: "Insights into Project Beta development.",
+        tags: ["Blockchain"],
+        Associated: [{ name: "Team B" }],
+        image: "/assets/book-cover-2.jpg",
+        locked: true,
+        eta: "Q4 2025",
+        date: "2024-12-15",
+      }
+    ];
+
+    const projectGrid = document.getElementById("projectGrid");
+    const tagFiltersContainer = document.getElementById("tagFilters");
+    const associatedFiltersContainer = document.getElementById("associatedFilters");
+    const paginationContainer = document.getElementById("pagination");
+    const searchInput = document.getElementById("searchInput");
+    const sortSelect = document.getElementById("sortSelect");
+
+    let currentPage = 1;
+    const itemsPerPage = 8;
+    let selectedTags = new Set();
+    let selectedAssociated = new Set();
+
+    function populateFilters() {
+      const tags = new Set();
+      const associated = new Set();
+      projects.forEach(p => {
+        (p.tags || []).forEach(t => tags.add(t));
+        (p.Associated || []).forEach(a => associated.add(a.name));
+      });
+
+      tagFiltersContainer.innerHTML = [...tags].map(tag => `
+        <label class="inline-flex items-center">
+          <input type="checkbox" value="${tag}" onchange="toggleTagCheckbox(event)" />
+          <span class="ml-2">${tag}</span>
+        </label>`).join("");
+
+      associatedFiltersContainer.innerHTML = [...associated].map(name => `
+        <label class="inline-flex items-center">
+          <input type="checkbox" value="${name}" onchange="toggleAssociatedCheckbox(event)" />
+          <span class="ml-2">${name}</span>
+        </label>`).join("");
+
+      updateCheckboxStates();
+    }
+
+    function toggleTagCheckbox(event) {
+      const tag = event.target.value;
+      if (event.target.checked) selectedTags.add(tag);
+      else selectedTags.delete(tag);
+      currentPage = 1;
+      applyFilters();
+    }
+
+    function toggleAssociatedCheckbox(event) {
+      const name = event.target.value;
+      if (event.target.checked) selectedAssociated.add(name);
+      else selectedAssociated.delete(name);
+      currentPage = 1;
+      applyFilters();
+    }
+
+    function updateCheckboxStates() {
+      [...tagFiltersContainer.querySelectorAll("input[type=checkbox]")].forEach(cb => cb.checked = selectedTags.has(cb.value));
+      [...associatedFiltersContainer.querySelectorAll("input[type=checkbox]")].forEach(cb => cb.checked = selectedAssociated.has(cb.value));
+    }
+
+    function resetFilters() {
+      searchInput.value = "";
+      sortSelect.value = "newest";
+      selectedTags.clear();
+      selectedAssociated.clear();
+      currentPage = 1;
+      applyFilters();
+    }
+
+    function getFilteredProjects() {
+      let filtered = projects;
+      const term = searchInput.value.trim().toLowerCase();
+      if (term) {
+        filtered = filtered.filter(p =>
+          p.name.toLowerCase().includes(term) ||
+          p.description.toLowerCase().includes(term) ||
+          (p.tags || []).some(t => t.toLowerCase().includes(term)) ||
+          (p.Associated || []).some(a => a.name.toLowerCase().includes(term))
+        );
+      }
+
+      if (selectedTags.size > 0) {
+        filtered = filtered.filter(p => (p.tags || []).some(t => selectedTags.has(t)));
+      }
+
+      if (selectedAssociated.size > 0) {
+        filtered = filtered.filter(p => (p.Associated || []).some(a => selectedAssociated.has(a.name)));
+      }
+
+      filtered.sort((a, b) => {
+        const dateA = new Date(a.date), dateB = new Date(b.date);
+        return sortSelect.value === "newest" ? dateB - dateA : dateA - dateB;
+      });
+
+      return filtered;
+    }
+
+    function renderProjects() {
+      const filtered = getFilteredProjects();
+      const start = (currentPage - 1) * itemsPerPage;
+      const paginated = filtered.slice(start, start + itemsPerPage);
+
+      projectGrid.innerHTML = paginated.map(p => `
+        <div class="relative group cursor-pointer perspective">
+          <div class="w-full h-60 rounded-lg shadow-lg relative preserve-3d transition-transform duration-700 group-hover:rotate-y-180">
+            <div class="absolute inset-0 backface-hidden bg-cover bg-center rounded-lg"
+              style="background-image: url('${p.image || "/assets/book-cover.jpg"}')">
+              ${p.locked ? `<div class="absolute inset-0 bg-black/70 flex items-center justify-center text-white text-sm font-semibold">
+                Locked<br/>ETA: ${p.eta || "TBD"}</div>` : ""}
+            </div>
+            <div class="absolute inset-0 backface-hidden bg-[#211a11] rounded-lg p-4 text-[#c8bb9f] rotate-y-180 flex flex-col justify-between font-serif">
+              <div>
+                <h4 class="font-bold text-lg mb-2">${p.name}</h4>
+                <p class="text-sm mb-2">${p.description}</p>
+                <div class="flex flex-wrap gap-1 mb-2">
+                  ${(p.tags || []).map(t => `<span class='text-xs bg-[#3b3429] text-[#c8bb9f] px-2 py-1 rounded'>${t}</span>`).join("")}
+                </div>
+                <div class="flex flex-wrap gap-1">
+                  ${(p.Associated || []).map(a => `<span class='text-xs bg-[#3b3429] text-[#c8bb9f] px-2 py-1 rounded'>${a.name}</span>`).join("")}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="text-center mt-2 font-serif">
+            <h4 class="text-md font-bold truncate text-[#c8bb9f]">${p.name}</h4>
+            <p class="text-xs text-[#c8bb9f]">${(p.tags || []).join(", ")}</p>
+          </div>
+        </div>`).join("");
+
+      renderPagination(filtered.length);
+    }
+
+    function renderPagination(total) {
+      const totalPages = Math.ceil(total / itemsPerPage);
+      if (totalPages <= 1) {
+        paginationContainer.innerHTML = "";
+        return;
+      }
+
+      paginationContainer.innerHTML = Array.from({ length: totalPages }, (_, i) => `
+        <button class="${i + 1 === currentPage ? 'bg-[#661d16] text-[#c8bb9f]' : ''}" onclick="goToPage(${i + 1})">${i + 1}</button>
+      `).join("");
+    }
+
+    function goToPage(page) {
+      currentPage = page;
+      renderProjects();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function applyFilters() {
+      currentPage = 1;
+      renderProjects();
+    }
+
+    populateFilters();
+    renderProjects();
+  </script>
+</body>
+</html>

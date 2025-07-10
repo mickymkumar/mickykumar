@@ -1,0 +1,88 @@
+<section id="about" class="relative py-16 bg-white font-sfpro text-gray-900 border-y border-gray-200">
+  <div class="max-w-6xl mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+
+    <!-- Profile Image -->
+    <div class="flex justify-center md:justify-start">
+      <div class="relative w-56 h-56 rounded-full overflow-hidden shadow-xl border border-gray-200 hover:scale-105 transition-transform duration-500">
+        <img src="/assets/me.jpeg" alt="Portrait of Micky Kumar" class="object-cover w-full h-full" loading="lazy" />
+        <div class="absolute inset-0 bg-gradient-to-tr from-cyan-500 via-transparent to-indigo-600 opacity-10 pointer-events-none"></div>
+      </div>
+    </div>
+
+    <!-- About Content -->
+    <div class="space-y-4">
+      <p class="text-xs uppercase tracking-wide text-cyan-600 font-semibold">Who I Am</p>
+      <h2 class="text-3xl md:text-4xl font-bold leading-snug">Bridging Software & Networks to Build Smarter Systems</h2>
+      <p class="text-base text-gray-600 leading-relaxed max-w-xl">
+        <%= portfolioData.about %>
+      </p>
+    </div>
+  </div>
+
+  <!-- Skills Section -->
+  <div class="max-w-6xl mx-auto px-6 md:px-12 mt-16 space-y-14">
+
+    <!-- Skill Group Template -->
+    <% const skillGroups = [
+      { title: "Knowledge", skills: [
+        { name: "Linux", icon: "🐧" },
+        { name: "Python", icon: "🐍" }
+      ] },
+      { title: "Backend", skills: [
+        { name: "Node.js", icon: "🟢" },
+        { name: "PostgreSQL", icon: "🐘" },
+        { name: "Docker", icon: "🐳" },
+        { name: "Kubernetes", icon: "☸️" },
+        { name: "AWS", icon: "☁️" }
+      ] },
+      { title: "Frontend", skills: [
+        { name: "React", icon: "⚛️" },
+        { name: "Tailwind CSS", icon: "💨" }
+      ] },
+      { title: "Networking Protocol", skills: [
+        { name: "Open5GS", icon: "📶" },
+        { name: "Kamailio", icon: "📡" }
+      ] },
+      { title: "Open Source Telco Projects", skills: [
+        { name: "Anuket", icon: "🌐" },
+        { name: "CNTI", icon: "🌐" },
+        { name: "FD.io", icon: "🌐" },
+        { name: "L3AF", icon: "🌐" },
+        { name: "Nephio", icon: "🌐" },
+        { name: "ONAP", icon: "🌐" },
+        { name: "OpenDaylight", icon: "🌐" },
+        { name: "Paraglider", icon: "🌐" },
+        { name: "XGVela", icon: "🌐" },
+        { name: "ISP Toolbox", icon: "🧰" },
+        { name: "Magma", icon: "🔥" },
+        { name: "Maveric", icon: "🧪" },
+        { name: "Open M-Plane", icon: "📶" },
+        { name: "Terragraph", icon: "🛰️" },
+        { name: "open5gs", icon: "📡" }
+      ] }
+    ]; %>
+
+    <% skillGroups.forEach(group => { %>
+      <div>
+        <p class="text-xs uppercase tracking-wide text-cyan-600 font-semibold mb-3"><%= group.title %></p>
+        <div class="flex flex-wrap gap-3">
+          <% group.skills.forEach(skill => { %>
+            <span class="px-4 py-1.5 bg-gray-100 text-gray-800 text-sm font-medium rounded-full shadow-sm select-none">
+              <span class="mr-1"><%= skill.icon %></span><%= skill.name %>
+            </span>
+          <% }) %>
+        </div>
+      </div>
+    <% }) %>
+
+    <! -- <p class="text-cyan-400 text-xs font-mono blinking-cursor">&gt; All systems operational</p>-->
+</div>
+</section>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;600;800&display=swap');
+  .font-sfpro {
+    font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+      Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  }
+</style>
