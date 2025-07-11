@@ -85,9 +85,9 @@ projects: [
 ],
 
     contact: {
-      email: 'your.email@example.com',
-      linkedin: 'https://linkedin.com/in/yourprofile',
-      github: 'https://github.com/yourname'
+      email: 'micky@mickykumar.com',
+      linkedin: 'https://linkedin.com/in/mickykumar',
+      github: 'https://github.com/mickymkumar'
     }
   };
 
