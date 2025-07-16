@@ -30,7 +30,7 @@ app.get('/', (req, res) => {
   { name: 'Azure', icon: 'fab fa-microsoft' }       // no official Azure icon, Microsoft icon used
 ],
 experience: [
-    {
+  {
     id: "magma",
     company: "Magma Core by Linux Foundation",
     role: "5G Core Developer",
@@ -49,41 +49,24 @@ experience: [
     description: ""
   },
   {
-    id: "veltris",
+    id: "veltris-1",
     company: "Veltris",
     role: "Senior Software Engineer",
     duration: "2019 – 2022",
     buildingIconClass: "fas fa-building",
     logo: " ",
     description: [
-        "• Successfully deployed Magma Core AGW on Ubuntu, resulting in a 20% reduction in network latency and a 15% increase in overall system efficiency.",
-        "• Demonstrated expert-level knowledge of 3GPP specifications, actively contributing to the development of 5G standards and protocols.",
-        "• Proficiently utilized Abot, Spirent, and other testing tools, leading to a 30% improvement in testing efficiency and a 10% reduction in testing-related errors.",
-        "• Spearheaded projects related to 4G and 5G technologies, resulting in the on-time delivery of three major initiatives that exceeded performance and functionality benchmarks.",
-        "• Mentored and trained interns in 4G, 5G, and 3GPP standards, with 100% of trainees reporting increased proficiency and contributing to project success.",
-        "• Took charge of daily scrum calls, ensuring cross-functional team alignment and driving an average 20% increase in project velocity.",
-        "• Played a critical role in the design of project requirements and testing plans, resulting in a 25% decrease in post-launch issues and a 10% reduction in project delivery timelines."
-      ]
-  },
-  {
-    id: "veltris",
-    company: "Veltris",
-    role: "Senior Software Engineer",
-    duration: "2019 – 2022",
-    buildingIconClass: "fas fa-building",
-    logo: " ",
-    description: [
-        "• Successfully deployed Magma Core AGW on Ubuntu, resulting in a 20% reduction in network latency and a 15% increase in overall system efficiency."
-        "• Demonstrated expert-level knowledge of 3GPP specifications, actively contributing to the development of 5G standards and protocols."
-        "• Proficiently utilized Abot, Spirent, and other testing tools, leading to a 30% improvement in testing efficiency and a 10% reduction in testing-related errors.
-        "• Spearheaded projects related to 4G and 5G technologies, resulting in the on-time delivery of three major initiatives that exceeded performance and functionality benchmarks."
-        "• Mentored and trained interns in 4G, 5G, and 3GPP standards, with 100% of trainees reporting increased proficiency and contributing to project success."
-        "• Took charge of daily scrum calls, ensuring cross-functional team alignment and driving an average 20% increase in project velocity."
-        "• Played a critical role in the design of project requirements and testing plans, resulting in a 25% decrease in post-launch issues and a 10% reduction in project delivery timelines.      ]
-        "
-      ]
-  },
+      "• Successfully deployed Magma Core AGW on Ubuntu, resulting in a 20% reduction in network latency and a 15% increase in overall system efficiency.",
+      "• Demonstrated expert-level knowledge of 3GPP specifications, actively contributing to the development of 5G standards and protocols.",
+      "• Proficiently utilized Abot, Spirent, and other testing tools, leading to a 30% improvement in testing efficiency and a 10% reduction in testing-related errors.",
+      "• Spearheaded projects related to 4G and 5G technologies, resulting in the on-time delivery of three major initiatives that exceeded performance and functionality benchmarks.",
+      "• Mentored and trained interns in 4G, 5G, and 3GPP standards, with 100% of trainees reporting increased proficiency and contributing to project success.",
+      "• Took charge of daily scrum calls, ensuring cross-functional team alignment and driving an average 20% increase in project velocity.",
+      "• Played a critical role in the design of project requirements and testing plans, resulting in a 25% decrease in post-launch issues and a 10% reduction in project delivery timelines."
+    ]
+  }
 ],
+
 projects: [
   {
     name: "Space App",
