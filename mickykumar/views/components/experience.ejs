@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title><%= portfolioData.name %> - Portfolio</title>
+  <link
+    href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+    rel="stylesheet"
+  />
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <style>
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .animate-fadeIn {
+      animation: fadeIn 0.3s ease-out forwards;
+    }
+  </style>
+</head>
+<body class="bg-white text-gray-800">
+
+  <section id="experience-timeline" class="py-20">
+    <div class="max-w-7xl mx-auto px-6">
+      <!-- Filter Tabs -->
+      <div class="flex flex-wrap gap-4 justify-center mb-12" id="filterTabs"></div>
+
+      <!-- Timeline Sections -->
+      <div id="timelineContent" class="space-y-16"></div>
+    </div>
+
+    <!-- Modal -->
+    <div
+      id="modalBackdrop"
+      class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50"
+      onclick="closeModal(event)"
+    >
+      <div
+        id="modalContent"
+        class="bg-white rounded-xl shadow-xl max-w-lg w-full p-6 relative animate-fadeIn"
+        onclick="event.stopPropagation()"
+      >
+        <button
+          onclick="closeModal()"
+          class="absolute top-4 right-4 text-gray-600 hover:text-gray-900 text-2xl font-bold"
+        >
+          &times;
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Pass portfolioData.experience from server side to client side
+    const experienceData = <%- JSON.stringify(portfolioData.experience) %>;
+
+    const decadeGroups = {};
+
+    experienceData.forEach((exp) => {
+      let yearMatch = exp.duration.match(/\d{4}/);
+      let year = yearMatch ? parseInt(yearMatch[0]) : 0;
+
+      const decadeStart = Math.floor(year / 10) * 10;
+      const label = decadeStart > 0 ? `${decadeStart} – ${decadeStart + 9}` : 'Unknown';
+
+      if (!decadeGroups[label]) decadeGroups[label] = [];
+      decadeGroups[label].push(exp);
+    });
+
+    const filterTabs = document.getElementById('filterTabs');
+    const timelineContent = document.getElementById('timelineContent');
+
+    const sortedDecades = Object.keys(decadeGroups).sort((a, b) => {
+      const numA = parseInt(a);
+      const numB = parseInt(b);
+      return numB - numA;
+    });
+
+    // Render filter tabs
+    sortedDecades.forEach((decade, i) => {
+      const tab = document.createElement('button');
+      tab.textContent = decade;
+      tab.className = `px-4 py-2 rounded-full border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white transition ${
+        i === 0 ? 'bg-blue-500 text-white' : ''
+      }`;
+      tab.onclick = () => filterToDecade(decade);
+      filterTabs.appendChild(tab);
+    });
+
+    function filterToDecade(decade) {
+      timelineContent.innerHTML = '';
+
+      // Update tab styles
+      sortedDecades.forEach((label) => {
+        const tabBtn = [...filterTabs.children].find((btn) => btn.textContent === label);
+        if (!tabBtn) return;
+        if (label === decade) {
+          tabBtn.classList.add('bg-blue-500', 'text-white');
+          tabBtn.classList.remove('text-blue-500', 'bg-transparent');
+        } else {
+          tabBtn.classList.remove('bg-blue-500', 'text-white');
+          tabBtn.classList.add('text-blue-500', 'bg-transparent');
+        }
+      });
+
+      const group = decadeGroups[decade];
+      if (!group) return;
+
+      const section = document.createElement('div');
+      section.innerHTML = `<h2 class="text-xl font-bold text-blue-700 mb-6">${decade}</h2>`;
+
+      const row = document.createElement('div');
+      row.className = 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8';
+
+      group.forEach((exp) => {
+        const card = document.createElement('div');
+        card.className =
+          'bg-gray-50 p-6 rounded-xl shadow hover:shadow-lg transform hover:scale-[1.01] transition cursor-pointer group relative';
+        card.onclick = () => openModal(exp.id);
+
+        const preview =
+          Array.isArray(exp.description) && exp.description.length > 0
+            ? exp.description[0].trim().replace(/^•\s*/, '') + '...'
+            : exp.description;
+
+        card.innerHTML = `
+          <div class="absolute left-[-12px] top-6 w-3 h-3 bg-blue-400 rounded-full shadow-md"></div>
+          <div class="flex items-center space-x-4 mb-4">
+            <div class="w-14 h-14 rounded-full border-4 border-blue-300 overflow-hidden">
+              <img src="${exp.logo}" alt="${exp.company} logo" class="w-full h-full object-contain" />
+            </div>
+            <div>
+              <h3 class="text-lg font-semibold text-blue-700 group-hover:underline">${exp.role}</h3>
+              <p class="text-sm text-gray-500 italic">${exp.company}</p>
+            </div>
+          </div>
+          <p class="text-gray-600 text-sm">${preview}</p>
+        `;
+
+        row.appendChild(card);
+      });
+
+      section.appendChild(row);
+      timelineContent.appendChild(section);
+    }
+
+    function openModal(id) {
+      const modal = document.getElementById('modalBackdrop');
+      const content = document.getElementById('modalContent');
+      const exp = experienceData.find((e) => e.id === id);
+      if (!exp) return;
+
+      const descHTML = Array.isArray(exp.description)
+        ? `<ul class="list-disc pl-5 space-y-2 text-gray-700 text-md leading-relaxed">
+            ${exp.description.map((d) => `<li>${d.trim().replace(/^•\s*/, '')}</li>`).join('')}
+          </ul>`
+        : `<p class="text-gray-700 text-md leading-relaxed">${exp.description}</p>`;
+
+      content.innerHTML = `
+        <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-600 hover:text-gray-900 text-2xl font-bold">&times;</button>
+        <div class="flex items-center space-x-4 mb-6">
+          <div class="w-16 h-16 rounded-full border-4 border-blue-400 overflow-hidden">
+            <img src="${exp.logo}" alt="${exp.company} logo" class="w-full h-full object-contain"/>
+          </div>
+          <div>
+            <h3 class="text-2xl font-bold text-blue-700">${exp.role}</h3>
+            <p class="text-gray-500 italic">${exp.company} • ${exp.duration}</p>
+          </div>
+        </div>
+        ${descHTML}
+      `;
+
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeModal(e) {
+      if (e) e.stopPropagation();
+      const modal = document.getElementById('modalBackdrop');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    // Load the most recent decade's content
+    if (sortedDecades.length > 0) {
+      filterToDecade(sortedDecades[0]);
+    }
+  </script>
+</body>
+</html>

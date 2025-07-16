@@ -49,12 +49,28 @@
     }
   });
 </script>
+<script>
+  function showExperience(id) {
+    const sections = document.querySelectorAll('[id^="detail-"]');
+    sections.forEach(sec => sec.style.display = "none");
+    document.getElementById("detail-placeholder").style.display = "none";
+    const active = document.getElementById(`detail-${id}`);
+    if (active) active.style.display = "block";
+  }
+</script>
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+/>
+
+
 
 
 </head>
 <body>
   <%- include('components/header') %>
   <%- include('components/about') %>
+  <%- include('components/experience') %>
   <%- include('components/services') %>
   <%- include('components/contact') %>
   <%- include('components/footer') %>
