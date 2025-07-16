@@ -81,8 +81,8 @@ experience: [
         "• Took charge of daily scrum calls, ensuring cross-functional team alignment and driving an average 20% increase in project velocity."
         "• Played a critical role in the design of project requirements and testing plans, resulting in a 25% decrease in post-launch issues and a 10% reduction in project delivery timelines.      ]
         "
-      },
-
+      ]
+  },
 ],
 projects: [
   {
