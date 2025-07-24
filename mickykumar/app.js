@@ -31,6 +31,15 @@ app.get('/', (req, res) => {
 ],
 experience: [
   {
+    id: "Kumar Enterprise",
+    company: "Kumar Enterprise",
+    role: "Founder",
+    duration: "Feb 2022 – Present",
+    buildingIconClass: "fas fa-building",
+    logo: "",
+    description: "support 500+ clients"
+  },
+  {
     id: "magma",
     company: "Magma Core by Linux Foundation",
     role: "5G Core Developer",
