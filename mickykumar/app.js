@@ -78,57 +78,20 @@ experience: [
 
 projects: [
   {
-    name: "Space App",
-    description: "A responsive weather forecast app using OpenWeatherMap API.",
-    image: "/images/weather-app.png",
-    link: "https://example.com/weather",
-    skills: [
-      { name: "HTML5", icon: "fab fa-html5" },
-      { name: "CSS3", icon: "fab fa-css3-alt" },
-      { name: "JavaScript", icon: "fab fa-js" }
-    ],
-    tags: ["Backend", "API", "Responsive"],
-    Associated: [{ name: "Kspace" }]
-  },
-    {
-    name: "Kreative Hub App",
-    description: "Connects creatives—photographers, artists, planners—for collaboration.",
-    image: "/images/weather-app.png",
-    link: "",
-    skills: [
-      { name: "HTML5", icon: "fab fa-html5" },
-      { name: "CSS3", icon: "fab fa-css3-alt" },
-      { name: "JavaScript", icon: "fab fa-js" }
-    ],
-    tags: ["Backend", "API", "Responsive"],
-    Associated: [{ name: "Kspace" }]
-  },
-    {
-    name: "Fundme.ai",
-    description: "AI-driven investor matchmaking platform for disruptive startups.",
-    image: "/images/weather-app.png",
-    link: "",
-    skills: [
-      { name: "Django", icon: "fab fa-square-binary" },
-      { name: "CSS3", icon: "fab fa-css3-alt" },
-      { name: "JavaScript", icon: "fab fa-js" }
-    ],
-    tags: ["Frontend", "API", "Responsive"],
-    Associated: [{ name: "Kspace" }]
-  },
-  {
-    name: "Weather App",
-    description: "A responsive weather forecast app using OpenWeatherMap API.",
-    image: "/images/weather-app.png",
-    link: "https://example.com/weather",
-    skills: [
-      { name: "HTML5", icon: "fab fa-html5" },
-      { name: "CSS3", icon: "fab fa-css3-alt" },
-      { name: "JavaScript", icon: "fab fa-js" }
-    ],
-    tags: ["Frontend", "API", "Responsive"],
-    Associated: [] // <- safe fallback
-  }
+  name: "Magma Core Community Supporter",
+  description: "Active contributor and supporter for the Magma Core open-source 5G project, helping with testing, documentation, and community engagement.",
+  image: "/assets/magma.svg",
+  link: "",  // or your personal profile or project page
+  skills: [
+    { name: "Backend Development", icon: "🖥️" },
+    { name: "API Integration", icon: "🔗" },
+    { name: "Open Source Collaboration", icon: "🤝" }
+  ],
+  tags: ["Backend", "API", "Open Source", "Telecom"],
+  Associated: [{ name: "Magma Core" }]
+}
+,
+    
 ],
 
     contact: {

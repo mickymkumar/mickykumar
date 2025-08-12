@@ -1,330 +1,300 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title class="color: text-white">Project Library</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <style>
-    /* Flip card 3D styles */
-    .perspective {
-      perspective: 1000px;
-    }
-    .preserve-3d {
-      transform-style: preserve-3d;
-    }
-    .backface-hidden {
-      backface-visibility: hidden;
-    }
-    .rotate-y-180 {
-      transform: rotateY(180deg);
-    }
+<%
+  const tagsSet = new Set();
+  const associatedSet = new Set();
 
-    /* Vintage style checkboxes */
-    input[type="checkbox"] {
-      accent-color: #c8bb9f;
-      width: 18px;
-      height: 18px;
-      cursor: pointer;
-    }
+  projects.forEach(p => {
+    if (Array.isArray(p.tags)) p.tags.forEach(t => tagsSet.add(t));
+    if (Array.isArray(p.associated)) p.associated.forEach(a => associatedSet.add(a));
+  });
 
-    label {
-      cursor: pointer;
-      color: #c8bb9f;
-      font-size: 0.95rem;
-      user-select: none;
-    }
+  const tags = Array.from(tagsSet).sort();
+  const associated = Array.from(associatedSet).sort();
+%>
 
-    #tagFilters label:hover,
-    #associatedFilters label:hover {
-      background-color: #3b3429;
-      border-radius: 3px;
-      padding-left: 4px;
-    }
+<style>
+  /* === BOOK STYLE (Closed on Shelf) === */
+  .book {
+    perspective: 1500px;
+    width: 180px;
+    height: 280px;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.3s;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .book:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+  }
+  .book img {
+    width: 100%;
+    height: 180px;
+    object-fit: contain;
+    border-radius: 8px 8px 0 0;
+    flex-shrink: 0;
+  }
+  .book h3 {
+    text-align: center;
+    font-size: 1.1rem;
+    color: black;
+    margin: 10px 8px 0 8px;
+    flex-grow: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-weight: 600;
+  }
 
-    /* Pagination buttons */
-    #pagination button {
-      border: 1px solid #c8bb9f;
-      background-color: #211a11;
-      color: #c8bb9f;
-      cursor: pointer;
-      padding: 0.25rem 0.75rem;
-      border-radius: 4px;
-      transition: background-color 0.3s, color 0.3s;
-    }
-    #pagination button:hover {
-      background-color: #661d16;
-      border-color: #661d16;
-      color: #c8bb9f;
-    }
-    #pagination button.bg-active,
-    #pagination button:focus {
-      background-color: #661d16;
-      border-color: #661d16;
-      color: #c8bb9f;
-    }
+  /* === POPUP OVERLAY === */
+  .book-popup {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    padding: 20px;
+  }
+  .book-popup.active {
+    display: flex;
+  }
 
-    /* 📚 Bookshelf styling */
-    .bg-bookshelf {
-      background-image: url('/assets/bookshelf-texture.jpg');
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-position: center;
-    }
+  /* === OPEN BOOK TWO-PAGE === */
+  .book-open {
+    display: flex;
+    width: 720px;
+    height: 480px;
+    perspective: 2000px;
+    position: relative;
+    background: #fffdf5;
+    border-radius: 10px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+    overflow: hidden;
+  }
+  .book-page {
+    width: 50%;
+    height: 100%;
+    padding: 20px 30px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    backface-visibility: hidden;
+    color: black;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  .book-left {
+    border-right: 1px solid #ccc;
+    display: flex;
+    flex-direction: column;
+  }
+  .book-left img {
+    max-width: 100%;
+    max-height: 320px;
+    object-fit: contain;
+    border-radius: 6px;
+    margin-top: 10px;
+    align-self: center;
+  }
+  .book-right {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
 
-    .bookshelf-shelf {
-  background-color: rgba(33, 26, 17, 0.92);
-  border-radius: 6px;
-  margin-bottom: 1rem;
-  padding: 1rem;
-  border: 1px solid #3b3429;
-  box-shadow: inset 0 -4px 6px rgba(0, 0, 0, 0.4);
-}
+  /* Scrollbar styling */
+  .book-page::-webkit-scrollbar {
+    width: 8px;
+  }
+  .book-page::-webkit-scrollbar-thumb {
+    background-color: rgba(0,0,0,0.15);
+    border-radius: 4px;
+  }
 
-  </style>
-</head>
-<body class="bg-gray-100 text-gray-900">
+  /* Close button */
+  .book-close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: #ff5c5c;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1rem;
+    z-index: 10;
+    transition: background-color 0.3s;
+  }
+  .book-close:hover {
+    background: #e04e4e;
+  }
 
-  <section id="projects" class="py-16 bg-[url('/assets/library-bg.png')] bg-cover bg-center">
-    <div class="max-w-7xl mx-auto px-6">
-      <h3 class="text-4xl font-bold text-center mb-12 text-gray-900 font-sfpro">Project Library</h3>
+  /* Sidebar style */
+  aside {
+    background: linear-gradient(to bottom, #f0f4f8, #e1e8ef);
+    border-right: 2px solid #cbd5e1;
+  }
 
-      <div class="flex flex-col lg:flex-row gap-8">
-        <!-- Sidebar Filters -->
-        <aside
-  class="w-full lg:w-1/4 font-serif p-6 rounded-lg shadow-md sticky top-20 max-h-[80vh] overflow-y-auto select-none border border-[#c8bb9f]"
-  style="background-color: transparent;"
->
-  <div class="bookshelf-shelf">
-    <label for="searchInput" class="block text-lg font-semibold mb-3 pb-1 border-b border-[#c8bb9f]" style="color: #c8bb9f;">
-      Search Titles
-    </label>
-    <input type="text" id="searchInput" placeholder="Search books..." class="w-full mb-6 px-3 py-2 rounded-sm focus:outline-none"
-      style="background-color: #211a11; color: #c8bb9f; border: 1px solid #c8bb9f; caret-color: #c8bb9f;" oninput="applyFilters()" />
-  </div>
+  /* Bookshelf layout */
+  #projectsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+</style>
 
-  <div class="bookshelf-shelf">
-    <label for="sortSelect" class="block text-lg font-semibold mb-3 pb-1 border-b border-[#c8bb9f]" style="color: #c8bb9f;">
-      Sort By
-    </label>
-    <select id="sortSelect" class="w-full mb-6 px-3 py-2 rounded-sm focus:outline-none"
-      style="background-color: #211a11; color: #c8bb9f; border: 1px solid #c8bb9f;" onchange="applyFilters()">
-      <option value="newest">Newest</option>
-      <option value="oldest">Oldest</option>
-    </select>
-  </div>
+<section id="projects" class="py-10 max-w-7xl mx-auto px-6 bg-white">
+  <h2 class="text-3xl font-bold mb-8 text-black">Project Library</h2>
 
-  <div class="bookshelf-shelf">
-    <h4 class="text-lg font-semibold mb-3 pb-1 border-b border-[#c8bb9f]" style="color: #c8bb9f;">Tags</h4>
-    <div id="tagFilters" class="flex flex-col gap-2 max-h-48 overflow-y-auto pr-1 scroll-smooth"></div>
-  </div>
+  <div class="flex flex-col lg:flex-row gap-8">
+    <!-- Filters Sidebar -->
+    <aside class="w-full lg:w-1/4 p-6 rounded-lg shadow border border-gray-200 sticky top-20 max-h-[80vh] overflow-y-auto">
+      <div class="mb-6">
+        <label for="searchInput" class="block text-lg font-semibold mb-2 text-black">Search Titles</label>
+        <input type="text" id="searchInput" placeholder="Search projects..."
+          class="w-full px-3 py-2 border rounded focus:outline-none text-black bg-white"
+          oninput="applyFilters()" autocomplete="off" spellcheck="false"/>
+      </div>
 
-  <div class="bookshelf-shelf">
-    <h4 class="text-lg font-semibold mb-3 pb-1 border-b border-[#c8bb9f]" style="color: #c8bb9f;">Associated</h4>
-    <div id="associatedFilters" class="flex flex-col gap-2 max-h-48 overflow-y-auto pr-1 scroll-smooth"></div>
-  </div>
+      <div class="mb-6">
+        <label for="sortSelect" class="block text-lg font-semibold mb-2 text-black">Sort By</label>
+        <select id="sortSelect" class="w-full px-3 py-2 border rounded focus:outline-none text-black bg-white"
+          onchange="applyFilters()">
+          <option value="newest">Newest</option>
+          <option value="oldest">Oldest</option>
+        </select>
+      </div>
 
-  <div class="bookshelf-shelf">
-    <button onclick="resetFilters()" class="w-full py-2 rounded-sm transition-colors"
-      style="background-color: #661d16; color: #c8bb9f; border: 1px solid #661d16;"
-      onmouseover="this.style.backgroundColor='#4a150f'; this.style.borderColor='#4a150f'"
-      onmouseout="this.style.backgroundColor='#661d16'; this.style.borderColor='#661d16'">
-      Reset Filters
-    </button>
-  </div>
-</aside>
-
-
-        <!-- Projects Bookshelf -->
-        <div class="w-full lg:w-3/4">
-          <div id="projectGrid" class="grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-            <!-- Books will be inserted here -->
-          </div>
-          <div class="mt-10 flex justify-center gap-2" id="pagination"></div>
+      <div class="mb-6">
+        <h3 id="tagsLabel" class="text-lg font-semibold mb-3 border-b border-gray-300 pb-1 text-black">Tags</h3>
+        <div id="tagFilters" class="flex flex-col gap-2 max-h-48 overflow-y-auto pr-1 text-black">
+          <% tags.forEach(tag => { %>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" value="<%= tag %>" class="cursor-pointer accent-blue-600" onchange="applyFilters()" />
+              <span><%= tag %></span>
+            </label>
+          <% }) %>
         </div>
       </div>
-    </div>
-  </section>
 
-  <script>
-    const projects = [
-      {
-        id: 1,
-        name: "Project Alpha",
-        description: "A detailed overview of Project Alpha.",
-        tags: ["AI", "ML"],
-        Associated: [{ name: "Team A" }],
-        image: "/assets/book-cover.jpg",
-        locked: false,
-        eta: null,
-        date: "2025-06-01",
-      },
-      {
-        id: 2,
-        name: "Project Beta",
-        description: "Insights into Project Beta development.",
-        tags: ["Blockchain"],
-        Associated: [{ name: "Team B" }],
-        image: "/assets/book-cover-2.jpg",
-        locked: true,
-        eta: "Q4 2025",
-        date: "2024-12-15",
-      }
-    ];
+      <div class="mb-6">
+        <h3 id="associatedLabel" class="text-lg font-semibold mb-3 border-b border-gray-300 pb-1">Associated</h3>
+        <div id="associatedFilters" class="flex flex-col gap-2 max-h-48 overflow-y-auto pr-1">
+          <% associated.forEach(a => { %>
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" value="<%= a %>" class="cursor-pointer accent-purple-600" onchange="applyFilters()" />
+              <span><%= a %></span>
+            </label>
+          <% }) %>
+        </div>
+      </div>
 
-    const projectGrid = document.getElementById("projectGrid");
-    const tagFiltersContainer = document.getElementById("tagFilters");
-    const associatedFiltersContainer = document.getElementById("associatedFilters");
-    const paginationContainer = document.getElementById("pagination");
-    const searchInput = document.getElementById("searchInput");
-    const sortSelect = document.getElementById("sortSelect");
+      <button onclick="resetFilters()" class="w-full py-2 bg-blue-700 text-white rounded hover:bg-blue-800 transition">
+        Reset Filters
+      </button>
+    </aside>
 
-    let currentPage = 1;
-    const itemsPerPage = 8;
-    let selectedTags = new Set();
-    let selectedAssociated = new Set();
+    <!-- Projects List -->
+    <main class="w-full lg:w-3/4" id="projectsContainer"></main>
+  </div>
+</section>
 
-    function populateFilters() {
-      const tags = new Set();
-      const associated = new Set();
-      projects.forEach(p => {
-        (p.tags || []).forEach(t => tags.add(t));
-        (p.Associated || []).forEach(a => associated.add(a.name));
-      });
+<!-- Popup Book -->
+<div id="bookPopup" class="book-popup" tabindex="-1" aria-modal="true" role="dialog">
+  <div class="book-open" id="bookOpen">
+    <button class="book-close" onclick="closeBook()" aria-label="Close book popup">X</button>
+    <div class="book-page book-left" id="bookLeft"></div>
+    <div class="book-page book-right" id="bookRight"></div>
+  </div>
+</div>
 
-      tagFiltersContainer.innerHTML = [...tags].map(tag => `
-        <label class="inline-flex items-center">
-          <input type="checkbox" value="${tag}" onchange="toggleTagCheckbox(event)" />
-          <span class="ml-2">${tag}</span>
-        </label>`).join("");
+<script>
+  const projects = <%- JSON.stringify(projects) %>;
 
-      associatedFiltersContainer.innerHTML = [...associated].map(name => `
-        <label class="inline-flex items-center">
-          <input type="checkbox" value="${name}" onchange="toggleAssociatedCheckbox(event)" />
-          <span class="ml-2">${name}</span>
-        </label>`).join("");
+  function applyFilters() {
+    const searchText = document.getElementById('searchInput').value.toLowerCase().trim();
+    const sortOrder = document.getElementById('sortSelect').value;
 
-      updateCheckboxStates();
+    const selectedTags = Array.from(document.querySelectorAll('#tagFilters input:checked'))
+      .map(cb => cb.value);
+
+    const selectedAssociated = Array.from(document.querySelectorAll('#associatedFilters input:checked'))
+      .map(cb => cb.value);
+
+    let filtered = projects.filter(project => {
+      const matchText = project.name.toLowerCase().includes(searchText) ||
+                        project.description.toLowerCase().includes(searchText);
+      if (!matchText) return false;
+
+      if (!selectedTags.every(tag => project.tags?.includes(tag))) return false;
+      if (!selectedAssociated.every(a => project.associated?.includes(a))) return false;
+      return true;
+    });
+
+    if (sortOrder === 'oldest') filtered = filtered.slice().reverse();
+    renderProjects(filtered);
+  }
+
+  function renderProjects(projectsToRender) {
+    const container = document.getElementById('projectsContainer');
+    container.innerHTML = '';
+
+    if (projectsToRender.length === 0) {
+      container.innerHTML = '<p class="text-center text-black w-full">No projects found.</p>';
+      return;
     }
 
-    function toggleTagCheckbox(event) {
-      const tag = event.target.value;
-      if (event.target.checked) selectedTags.add(tag);
-      else selectedTags.delete(tag);
-      currentPage = 1;
-      applyFilters();
+    projectsToRender.forEach(project => {
+      const div = document.createElement('div');
+      div.className = 'book';
+      div.innerHTML = `
+        <img src="${project.image}" alt="${project.name}" loading="lazy" />
+        <h3 title="${project.name}">${project.name}</h3>
+      `;
+      div.addEventListener('click', () => openBook(project));
+      container.appendChild(div);
+    });
+  }
+
+  function openBook(project) {
+    document.getElementById('bookLeft').innerHTML = `
+      <h2 class="text-xl font-bold mb-2">${project.name}</h2>
+      <img src="${project.image}" alt="${project.name}" />
+    `;
+    document.getElementById('bookRight').innerHTML = `
+      <p style="white-space: pre-wrap;">${project.description}</p>
+      <div>${(project.skills?.map(s => `<span style="background:#eee; padding:2px 6px; margin:0 4px 4px 0; border-radius:4px; font-size:12px; color:#333;">${s.name}</span>`) || []).join('')}</div>
+      <div>${(project.tags?.map(t => `<span style="background:#d0e8ff; color:#0366d6; padding:3px 7px; margin:0 6px 6px 0; border-radius:5px; font-size:13px;">${t}</span>`) || []).join('')}</div>
+      ${project.link ? `<a href="${project.link}" target="_blank" rel="noopener noreferrer" style="color:#0366d6; text-decoration:underline;">View Project</a>` : ''}
+    `;
+    document.getElementById('bookPopup').classList.add('active');
+    document.getElementById('bookPopup').focus();
+  }
+
+  function closeBook() {
+    document.getElementById('bookPopup').classList.remove('active');
+  }
+
+  function resetFilters() {
+    document.getElementById('searchInput').value = '';
+    document.getElementById('sortSelect').value = 'newest';
+    document.querySelectorAll('#tagFilters input').forEach(cb => cb.checked = false);
+    document.querySelectorAll('#associatedFilters input').forEach(cb => cb.checked = false);
+    applyFilters();
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      closeBook();
     }
+  });
 
-    function toggleAssociatedCheckbox(event) {
-      const name = event.target.value;
-      if (event.target.checked) selectedAssociated.add(name);
-      else selectedAssociated.delete(name);
-      currentPage = 1;
-      applyFilters();
-    }
-
-    function updateCheckboxStates() {
-      [...tagFiltersContainer.querySelectorAll("input[type=checkbox]")].forEach(cb => cb.checked = selectedTags.has(cb.value));
-      [...associatedFiltersContainer.querySelectorAll("input[type=checkbox]")].forEach(cb => cb.checked = selectedAssociated.has(cb.value));
-    }
-
-    function resetFilters() {
-      searchInput.value = "";
-      sortSelect.value = "newest";
-      selectedTags.clear();
-      selectedAssociated.clear();
-      currentPage = 1;
-      applyFilters();
-    }
-
-    function getFilteredProjects() {
-      let filtered = projects;
-      const term = searchInput.value.trim().toLowerCase();
-      if (term) {
-        filtered = filtered.filter(p =>
-          p.name.toLowerCase().includes(term) ||
-          p.description.toLowerCase().includes(term) ||
-          (p.tags || []).some(t => t.toLowerCase().includes(term)) ||
-          (p.Associated || []).some(a => a.name.toLowerCase().includes(term))
-        );
-      }
-
-      if (selectedTags.size > 0) {
-        filtered = filtered.filter(p => (p.tags || []).some(t => selectedTags.has(t)));
-      }
-
-      if (selectedAssociated.size > 0) {
-        filtered = filtered.filter(p => (p.Associated || []).some(a => selectedAssociated.has(a.name)));
-      }
-
-      filtered.sort((a, b) => {
-        const dateA = new Date(a.date), dateB = new Date(b.date);
-        return sortSelect.value === "newest" ? dateB - dateA : dateA - dateB;
-      });
-
-      return filtered;
-    }
-
-    function renderProjects() {
-      const filtered = getFilteredProjects();
-      const start = (currentPage - 1) * itemsPerPage;
-      const paginated = filtered.slice(start, start + itemsPerPage);
-
-      projectGrid.innerHTML = paginated.map(p => `
-        <div class="relative group cursor-pointer perspective">
-          <div class="w-full h-60 rounded-lg shadow-lg relative preserve-3d transition-transform duration-700 group-hover:rotate-y-180">
-            <div class="absolute inset-0 backface-hidden bg-cover bg-center rounded-lg"
-              style="background-image: url('${p.image || "/assets/book-cover.jpg"}')">
-              ${p.locked ? `<div class="absolute inset-0 bg-black/70 flex items-center justify-center text-white text-sm font-semibold">
-                Locked<br/>ETA: ${p.eta || "TBD"}</div>` : ""}
-            </div>
-            <div class="absolute inset-0 backface-hidden bg-[#211a11] rounded-lg p-4 text-[#c8bb9f] rotate-y-180 flex flex-col justify-between font-serif">
-              <div>
-                <h4 class="font-bold text-lg mb-2">${p.name}</h4>
-                <p class="text-sm mb-2">${p.description}</p>
-                <div class="flex flex-wrap gap-1 mb-2">
-                  ${(p.tags || []).map(t => `<span class='text-xs bg-[#3b3429] text-[#c8bb9f] px-2 py-1 rounded'>${t}</span>`).join("")}
-                </div>
-                <div class="flex flex-wrap gap-1">
-                  ${(p.Associated || []).map(a => `<span class='text-xs bg-[#3b3429] text-[#c8bb9f] px-2 py-1 rounded'>${a.name}</span>`).join("")}
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="text-center mt-2 font-serif">
-            <h4 class="text-md font-bold truncate text-[#c8bb9f]">${p.name}</h4>
-            <p class="text-xs text-[#c8bb9f]">${(p.tags || []).join(", ")}</p>
-          </div>
-        </div>`).join("");
-
-      renderPagination(filtered.length);
-    }
-
-    function renderPagination(total) {
-      const totalPages = Math.ceil(total / itemsPerPage);
-      if (totalPages <= 1) {
-        paginationContainer.innerHTML = "";
-        return;
-      }
-
-      paginationContainer.innerHTML = Array.from({ length: totalPages }, (_, i) => `
-        <button class="${i + 1 === currentPage ? 'bg-[#661d16] text-[#c8bb9f]' : ''}" onclick="goToPage(${i + 1})">${i + 1}</button>
-      `).join("");
-    }
-
-    function goToPage(page) {
-      currentPage = page;
-      renderProjects();
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-
-    function applyFilters() {
-      currentPage = 1;
-      renderProjects();
-    }
-
-    populateFilters();
-    renderProjects();
-  </script>
-</body>
-</html>
+  document.addEventListener('DOMContentLoaded', applyFilters);
+</script>
